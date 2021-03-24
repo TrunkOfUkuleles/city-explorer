@@ -22,6 +22,7 @@ class App extends React.Component {
       showError: false,
       forc: [],
       showForc: false,
+      weather:{}
     };
   }
 
@@ -62,27 +63,20 @@ class App extends React.Component {
       });
   };
 
-  // getFore = async (e) => {
-  //   try{
-
-  //     const url = process.env.REACT_APP_LOCAL_KEY
-  //     const location = await axios.get(url);
-  //     const locationArray = await location.data;
-
-  //     this.setState({
-  //       forc: [...resu],
-  //       showForc: true,
-  //     }
-
-  // );
-
-  //   } catch(error) {
-
-  //     {console.log(error)}
-  //         <Error error={error.message} />
-
-  //   }
-
+  // specificFore = async() =>{
+  //   const WEATH = process.env.REACT_APP_LOCAL_KEY;
+  //   await axios.get(`${WEATH}`)
+  //     .then((result) => {
+  //       this.setState({
+  //         forc: result.data,
+  //         showForc: true,
+  //       });
+  //       console.log(this.state)
+  //     })
+  //     .catch((error) => {
+     
+  //       <Error error={error.message} />;
+  //     });
   // }
 
   getTest = async (e) => {
@@ -136,6 +130,7 @@ class App extends React.Component {
               lat: {this.state.location.lat}, lon: {this.state.location.lon}{" "}
             </Card.Text>
             <Image src={this.state.imgsrc} alt="map" rounded />
+            <p>Weather: {this.state.weather}</p>
           </Card>
         ) : (
           <></>
