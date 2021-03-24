@@ -3,6 +3,7 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import Forecast from './forecast.js'
 // import Alert from 'react-bootstrap/Alert'
               
  class App extends React.Component {
@@ -13,74 +14,68 @@ import Form from 'react-bootstrap/Form';
       quer: '',
       imgsrc: '',
       displayResults: false,
-      ll: [],
+      errorMess: {},
       showError: false,
+      forc: [],
     }
   }
-  testme = (e) => {
-    e.preventDefault();
-    const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.quer}&format=json`;
-    axios.get(url, {params:{key: process.env.REACT_APP_LOCATION_KEY}})
-      
-    // const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.quer}&format=json`;
-    // location = await axios.get(url);
-    // second = location.data;
-    // this.setState({message: location})
-    // console.log(second)
-    
-  }
-  
+
   
   getTest = async (e) => {
+
+    try{
     e.preventDefault();
-    const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.quer}&format=json`;
+    const url = `https://us1.locationiq.com/v1/search.php?q=${this.state.quer}&format=json&key=${process.env.REACT_APP_LOCATION_KEY}`;
     const location = await axios.get(url);
     const locationArray = location.data;
+ 
     this.setState({
       location: locationArray[0],
       displayResults: true,
-      ll: [locationArray[0].lat , locationArray[0].lon],
       imgsrc: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_KEY}&center=${locationArray[0].lat},${locationArray[0].lon}&zoom=13`,
-
-    });
-
-    try{
-
-    }catch(error){
-      console.error(error)
-      this.setState({showError: true})
+      forc: locationArray.reduce((acc, curr) => {
+        let result = [...acc, {
+                                date: curr.date,
+                                description: curr.weather.description,
+                              temp: curr.temp}]
+      return result}, [] )
     }
 
+    );
 
-    
+  } catch(error) {
+    console.error(error)
+
+  }
 
   }
   
 
-  render() {
-    console.log('state', this.state);
+  render(){
+
   return (    
    <>
-    {/* <Alert variant="danger" onClose={() => setShow(false)} dismissible></Alert> */}
    
           <h1> {this.state.location.display_name || "TEMP"} </h1>
-          <Form onSubmit={this.testme}>
+          <Form onSubmit={this.getTest}>
             <input onChange={(e) => this.setState({quer: e.target.value})} placeholder="Enter your favorite city!" />
           <Button type="submit"> Hello </Button>
           </Form>
-      
-        {this.state.displayResults  && 
-        <>
-          <p> lat: {this.state.ll[0]}, lon: {this.state.ll[1]} </p>
-           <img src={this.state.imgsrc} alt='map' />
-        </>
-      }
+             {console.log(`${this.state.forc}`)}
+       <Forecast data={this.state.forc} />
 
-      {this.state.showError &&
-        <error />
-      }  
+        {this.state.displayResults  ? 
+        <>
+          <p> lat: {this.state.location.lat}, lon: {this.state.location.lon} </p>
+           <img src={this.state.imgsrc} alt='map' />
+        
+        </>
+        :
+        <></>
+      }
       </>   
-  )}
+  )
 }
+ }
 
 export default App;

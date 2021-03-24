@@ -12,7 +12,7 @@ import Form from 'react-bootstrap/Form';
 
   render(){
       return (
-         <h2> error bro </h2>
+         <h1 error bro </h1>
       )
   }
  }
