@@ -20,27 +20,29 @@ import Forecast from './forecast.js'
     }
   }
 
-  getLocal = async (e) => {
-    try{
-      e.preventDefault();
-      const SERVER = 'http://localhost:3001/forecast';
-      const weather = await axios.get(`${SERVER}`);
-      const newArr = weather.data
-      this.setState({
-        location: newArr[0],
-      displayResults: true,
-      forc: newArr.reduce((acc, curr) => {
-        let result = [...acc, { date: curr.date,
-                                description: curr.weather.description,
-                                temp: curr.temp}]
-      return result}, [] )
-      })
-      // const IMAGE = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_KEY}&center=${locationArray[0].lat},${locationArray[0].lon}&zoom=13`
+  // getLocal = async (e) => {
+  //   try{
+  //     e.preventDefault();
+  //     const SERVER = 'http://localhost:3001/forecast';
+  //     const weather = await axios.get(`${SERVER}`);
+  //     const newArr = weather.data
+  //     this.setState({
+  //       location: newArr[0],
+  //     displayResults: true,
+  //     forc: newArr.reduce((acc, curr) => {
+  //       let result = [...acc, { date: curr.date,
+  //                               description: curr.weather.description,
+  //                               temp: curr.temp,
+  //                               lat: curr.lat,
+  //                             lon: curr.lon}]
+  //     return result}, [] )
+  //     })
+  //     // const IMAGE = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_KEY}&center=${locationArray[0].lat},${locationArray[0].lon}&zoom=13`
 
-    }catch(error){
-        console.error(error)
-    }
-  }
+  //   }catch(error){
+  //       console.error(error)
+  //   }
+  // }
   
   getTest = async (e) => {
 
@@ -48,17 +50,17 @@ import Forecast from './forecast.js'
     e.preventDefault();
     const url = `https://us1.locationiq.com/v1/search.php?q=${this.state.quer}&format=json&key=${process.env.REACT_APP_LOCATION_KEY}`;
     const location = await axios.get(url);
-    const locationArray = location.data;
+    const locationArray = await location.data;
  
     this.setState({
       location: locationArray[0],
       displayResults: true,
       imgsrc: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_KEY}&center=${locationArray[0].lat},${locationArray[0].lon}&zoom=13`,
       forc: locationArray.reduce((acc, curr) => {
-        let result = [...acc, { date: curr.date,
-                                description: curr.weather.description,
-                                temp: curr.temp}]
-      return result}, [] )
+        return  [...acc, { date: curr.date,
+                           description: curr.weather.description,
+                           temp: curr.temp
+                                }]}, [] )
     }
 
     );
