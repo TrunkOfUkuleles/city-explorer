@@ -77,7 +77,7 @@ import Forecast from './forecast.js'
    <>
    
           <h1> {this.state.location.display_name || "TEMP"} </h1>
-          <Form onSubmit={this.getLocal}>
+          <Form onSubmit={this.getTest}>
             <input onChange={(e) => this.setState({quer: e.target.value})} placeholder="Enter your favorite city!" />
           <Button type="submit"> Hello </Button>
           </Form>
