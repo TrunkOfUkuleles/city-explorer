@@ -1,23 +1,28 @@
-import React from 'react';
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Forecast from './forecast.js'
+import React from "react";
+import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
+import Image from "react-bootstrap/Image";
+import Forecast from "./forecast.js";
+import Error from "./error.js";
+
 // import Alert from 'react-bootstrap/Alert'
-              
- class App extends React.Component {
-  constructor(props){
+
+class App extends React.Component {
+  constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       location: {},
-      quer: '',
-      imgsrc: '',
+      quer: "",
+      imgsrc: "",
       displayResults: false,
       errorMess: {},
       showError: false,
       forc: [],
-    }
+      showForc: false,
+    };
   }
 
   // getLocal = async (e) => {
@@ -27,77 +32,117 @@ import Forecast from './forecast.js'
   //     const weather = await axios.get(`${SERVER}`);
   //     const newArr = weather.data
   //     this.setState({
-  //       location: newArr[0],
-  //     displayResults: true,
   //     forc: newArr.reduce((acc, curr) => {
-  //       let result = [...acc, { date: curr.date,
+  //       let result = [...acc, { date: curr.datetime,
   //                               description: curr.weather.description,
-  //                               temp: curr.temp,
-  //                               lat: curr.lat,
-  //                             lon: curr.lon}]
+  //                               temp: curr.temp }]
   //     return result}, [] )
   //     })
-  //     // const IMAGE = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_KEY}&center=${locationArray[0].lat},${locationArray[0].lon}&zoom=13`
 
   //   }catch(error){
   //       console.error(error)
   //   }
   // }
-  
+
+  componentDidMount = async() => {
+    const SERVER = process.env.REACT_APP_LOCAL_KEY;
+    await axios.get(`${SERVER}`)
+      .then((result) => {
+        this.setState({
+          forc: result.data,
+          showForc: true,
+        });
+        console.log(this.state)
+      })
+      .catch((error) => {
+        {
+          console.log("mounting issue ", error);
+        }
+        <Error error={error.message} />;
+      });
+  };
+
+  // getFore = async (e) => {
+  //   try{
+
+  //     const url = process.env.REACT_APP_LOCAL_KEY
+  //     const location = await axios.get(url);
+  //     const locationArray = await location.data;
+
+  //     this.setState({
+  //       forc: [...resu],
+  //       showForc: true,
+  //     }
+
+  // );
+
+  //   } catch(error) {
+
+  //     {console.log(error)}
+  //         <Error error={error.message} />
+
+  //   }
+
+  // }
+
   getTest = async (e) => {
-
-    try{
     e.preventDefault();
-    const url = `https://us1.locationiq.com/v1/search.php?q=${this.state.quer}&format=json&key=${process.env.REACT_APP_LOCATION_KEY}`;
-    const location = await axios.get(url);
-    const locationArray = await location.data;
- 
-    this.setState({
-      location: locationArray[0],
-      displayResults: true,
-      imgsrc: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_KEY}&center=${locationArray[0].lat},${locationArray[0].lon}&zoom=13`,
-      forc: locationArray.reduce((acc, curr) => {
-        return  [...acc, { date: curr.date,
-                           description: curr.weather.description,
-                           temp: curr.temp
-                                }]}, [] )
-    }
+    try {
+      const url = `https://us1.locationiq.com/v1/search.php?q=${this.state.quer}&format=json&key=${process.env.REACT_APP_LOCATION_KEY}`;
+      const location = await axios.get(url);
+      const locationArray = await location.data;
 
-    );
-
-  } catch(error) {
-    console.error(error)
-
-  }
-
-  }
-  
-
-  render(){
-
-  return (    
-   <>
-   
-          <h1> {this.state.location.display_name || "TEMP"} </h1>
-          <Form onSubmit={this.getTest}>
-            <input onChange={(e) => this.setState({quer: e.target.value})} placeholder="Enter your favorite city!" />
-          <Button type="submit"> Hello </Button>
-          </Form>
-       
-       
-        {this.state.displayResults  ? 
-        <>
-          <p> lat: {this.state.location.lat}, lon: {this.state.location.lon} </p>
-           <img src={this.state.imgsrc} alt='map' />
-        <Forecast data={this.state.forc} />
-
-        </>
-        :
-        <></>
+      this.setState({
+        location: locationArray[0],
+        displayResults: true,
+        imgsrc: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_KEY}&center=${locationArray[0].lat},${locationArray[0].lon}&zoom=13`,
+      });
+    } catch (error) {
+      {
+        console.log(error);
       }
-      </>   
-  )
+      <Error error={error.message} />;
+    }
+  };
+
+  render() {
+    return (
+      <div>
+        <Form>
+          <div onSubmit={this.getTest}>
+            {this.state.location.display_name || "TEMP"}{" "}
+          </div>
+          <input
+            onChange={(e) => this.setState({ quer: e.target.value })}
+            placeholder="Enter your favorite city!"
+          />
+          <Button type="submit"> Explore! </Button>
+        </Form>
+
+        <Card>
+             {
+         this.state.showForc ?
+           <ul>
+            <Forecast data={this.state.forc} />
+          </ul> 
+          :
+       <p> forcast? (this.state)</p>}
+       </Card>
+
+        {this.state.displayResults ? (
+          <Card>
+            <Card.Text>
+              {" "}
+              lat: {this.state.location.lat}, lon: {this.state.location.lon}{" "}
+            </Card.Text>
+            <Image src={this.state.imgsrc} alt="map" rounded />
+          </Card>
+        ) : (
+          <></>
+        )}
+      </div>
+    );
+  }
 }
- }
 
 export default App;

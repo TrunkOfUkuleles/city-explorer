@@ -1,8 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+
 
  class Error extends React.Component {
   constructor(props){
@@ -12,7 +10,7 @@ import Form from 'react-bootstrap/Form';
 
   render(){
       return (
-         <h1 error bro </h1>
+         <h1> error bro : {this.props.error}</h1>
       )
   }
  }
