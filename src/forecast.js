@@ -39,30 +39,28 @@ import Form from 'react-bootstrap/Form';
    
    rerenderer = (arrs) => {
      try{
-    arrs.map((el) => {
+    return arrs.map((el) => {
       <>
       <li>Date: {el.date}</li>
       <li>Description: {el.description}</li>
       <li>Temp: {el.temp}</li>
       </>
     })
-    return
+
   }catch(error){
       console.alert(error)
     }
-  
+   }
 
   render(){
 
   return (    
-   <>
-   {
+  
+   
         <ul>
       {this.rerenderer(this.props.data)}                        
         </ul>
-   }
-        
-      </>   
+
   )
 }
    }
