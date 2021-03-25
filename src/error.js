@@ -3,10 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
  class Error extends React.Component {
-  constructor(props){
-    super(props);
-    
-  }
+ 
 
   render(){
       return (

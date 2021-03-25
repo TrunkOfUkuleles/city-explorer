@@ -56,9 +56,7 @@ class App extends React.Component {
         console.log(this.state)
       })
       .catch((error) => {
-        {
-          console.log("mounting issue ", error);
-        }
+        
         <Error error={error.message} />;
       });
   };
@@ -92,9 +90,7 @@ class App extends React.Component {
         imgsrc: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_KEY}&center=${locationArray[0].lat},${locationArray[0].lon}&zoom=13`,
       });
     } catch (error) {
-      {
-        console.log(error);
-      }
+     
       <Error error={error.message} />;
     }
   };
