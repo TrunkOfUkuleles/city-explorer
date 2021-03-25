@@ -19,15 +19,15 @@ Finish time: _____
 Actual time needed to complete: _____
 
 Change Log
-Name of feature: launch______getting the data hooked up and displaying____________________
+Name of feature: launch______getting the data hooked up and____________________
 
 Estimate of time needed to complete: ___30 min
 
 Start time: 1:40_
 
-Finish time: _2:05
+Finish time: _3:40
 
-Actual time needed to complete: _ min
+Actual time needed to complete: 2hr min
 
 Name of feature: _______________________________
 

@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
-import Image from "react-bootstrap/Image";
 import Forecast from "./forecast.js";
 import Error from "./error.js";
 
@@ -22,7 +21,9 @@ class App extends React.Component {
       showError: false,
       forc: [],
       showForc: false,
-      weather:{}
+      weather:{},
+      latlon: {},
+      showMyForc: false,
     };
   }
 
@@ -79,6 +80,22 @@ class App extends React.Component {
   //     });
   // }
 
+  foreRend = async(e) => {
+    e.preventDefault();
+    await axios.get('https://start-some.herokuapp.com/forecast', {params: this.state.latlon})
+      .then((rees) => {this.setState({
+        weather: rees,
+        showMyForc: true,
+        showForc: false,
+      })})
+      .catch((error) => {
+        {
+        console.log("mounting issue ", error);
+        }
+      <Error error={error.message} />;
+    })
+  }
+
   getTest = async (e) => {
     e.preventDefault();
     try {
@@ -90,7 +107,10 @@ class App extends React.Component {
         location: locationArray[0],
         displayResults: true,
         imgsrc: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_KEY}&center=${locationArray[0].lat},${locationArray[0].lon}&zoom=13`,
+        
       });
+
+
     } catch (error) {
       {
         console.log(error);
@@ -101,41 +121,45 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <>
         <Form>
           <div onSubmit={this.getTest}>
-            {this.state.location.display_name || "TEMP"}{" "}
+            {this.state.location.display_name || "TEMP"}
           </div>
           <input
             onChange={(e) => this.setState({ quer: e.target.value })}
             placeholder="Enter your favorite city!"
           />
           <Button type="submit"> Explore! </Button>
+          
         </Form>
 
-        <Card>
-             {
-         this.state.showForc ?
-           <ul>
-            <Forecast data={this.state.forc} />
-          </ul> 
-          :
-       <p> forcast? (this.state)</p>}
-       </Card>
-
-        {this.state.displayResults ? (
+  {       this.state.displayResults &&  
+  <>
           <Card>
+            <Card.Img variant='top' src={this.state.imgsrc} alt="map" rounded />
+            <Card.Body>
+            <Card.Title>{this.state.location.display_name}</Card.Title>
             <Card.Text>
-              {" "}
-              lat: {this.state.location.lat}, lon: {this.state.location.lon}{" "}
+              lat: {this.state.location.lat}, 
+              lon: {this.state.location.lon},
+              weather: {this.state.weather}
             </Card.Text>
-            <Image src={this.state.imgsrc} alt="map" rounded />
-            <p>Weather: {this.state.weather}</p>
-          </Card>
-        ) : (
-          <></>
-        )}
-      </div>
+            
+            
+            </Card.Body>
+         </Card>
+        {this.state.showMyForc &&
+         <Button onClick={()=> this.foreRend}>forcast</Button>}
+         </>
+         }
+        {
+         this.state.showForc &&
+           <Card>
+            <Forecast data={this.state.forc} />
+          </Card> 
+  }
+    </>
     );
   }
 }

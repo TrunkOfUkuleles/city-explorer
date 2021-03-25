@@ -48,16 +48,17 @@ class Forecast extends React.Component {
       <ul>
         {this.props.data.map((el) => {
           return (
-            <>
+            <ul>
               <li>Date: {el.date}</li>
               <li>Description: {el.desc}</li>
               <li>Temp: {el.temp}</li>
-            </>
+            </ul>
+            
           );
         })}
       </ul>
     );
   }
 }
-
+//.map
 export default Forecast;
