@@ -27,24 +27,7 @@ class App extends React.Component {
     };
   }
 
-  // getLocal = async (e) => {
-  //   try{
-  //     e.preventDefault();
-  //     const SERVER = 'http://localhost:3001/forecast';
-  //     const weather = await axios.get(`${SERVER}`);
-  //     const newArr = weather.data
-  //     this.setState({
-  //     forc: newArr.reduce((acc, curr) => {
-  //       let result = [...acc, { date: curr.datetime,
-  //                               description: curr.weather.description,
-  //                               temp: curr.temp }]
-  //     return result}, [] )
-  //     })
 
-  //   }catch(error){
-  //       console.error(error)
-  //   }
-  // }
 
   toggleForc = () => {
     this.setState({showForc: !this.state.showForc})
@@ -60,28 +43,10 @@ class App extends React.Component {
         console.log(this.state)
       })
       .catch((error) => {
-        {
-          console.log("mounting issue ", error);
-        }
+       
         <Error error={error.message} />;
       });
   };
-
-  // specificFore = async() =>{
-  //   const WEATH = process.env.REACT_APP_LOCAL_KEY;
-  //   await axios.get(`${WEATH}`)
-  //     .then((result) => {
-  //       this.setState({
-  //         forc: result.data,
-  //         showForc: true,
-  //       });
-  //       console.log(this.state)
-  //     })
-  //     .catch((error) => {
-     
-  //       <Error error={error.message} />;
-  //     });
-  // }
 
   foreRend = async(e) => {
     e.preventDefault();
@@ -92,9 +57,7 @@ class App extends React.Component {
         showForc: false,
       })})
       .catch((error) => {
-        {
-        console.log("mounting issue ", error);
-        }
+       
       <Error error={error.message} />;
     })
   }
@@ -116,9 +79,7 @@ class App extends React.Component {
 
 
     } catch (error) {
-      {
-        console.log(error);
-      }
+    
       <Error error={error.message} />;
     }
   };
