@@ -50,9 +50,9 @@ class App extends React.Component {
 
   foreRend = async(e) => {
     e.preventDefault();
-    await axios.get('https://start-some.herokuapp.com/forecast', {params: this.state.latlon})
+    await axios.get(process.env.REACT_APP_LOCAL_KEY2, {params: this.state.latlon})
       .then((rees) => {this.setState({
-        weather: rees,
+        weather: rees.data,
         showMyForc: true,
         showForc: false,
       })})
