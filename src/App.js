@@ -46,13 +46,16 @@ class App extends React.Component {
   //   }
   // }
 
+  toggleForc = () => {
+    this.setState({showForc: !this.state.showForc})
+  }
+
   componentDidMount = async() => {
     const SERVER = process.env.REACT_APP_LOCAL_KEY;
     await axios.get(`${SERVER}`)
       .then((result) => {
         this.setState({
           forc: result.data,
-          showForc: true,
         });
         console.log(this.state)
       })
@@ -97,8 +100,9 @@ class App extends React.Component {
   }
 
   getTest = async (e) => {
-    e.preventDefault();
+    
     try {
+      e.preventDefault();
       const url = `https://us1.locationiq.com/v1/search.php?q=${this.state.quer}&format=json&key=${process.env.REACT_APP_LOCATION_KEY}`;
       const location = await axios.get(url);
       const locationArray = await location.data;
@@ -150,14 +154,16 @@ class App extends React.Component {
             </Card.Body>
          </Card>
         {this.state.showMyForc &&
-         <Button onClick={()=> this.foreRend}>forcast</Button>}
+         <Button onClick={this.foreRend}>Forcast</Button>}
          </>
          }
         {
-         this.state.showForc &&
+         this.state.showForc ?
            <Card>
             <Forecast data={this.state.forc} />
           </Card> 
+          :
+          <Button onClick={this.toggleForc}>See some Forecasts</Button>
   }
     </>
     );
