@@ -3,7 +3,6 @@ import React from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from 'react-bootstrap/Card'
-
 import Form from 'react-bootstrap/Form';
 import Error from './error';
 require('dotenv').config();
@@ -23,17 +22,15 @@ class App extends React.Component {
       weather:{},
       loclat:'',
       loclon: '',
+      movieResults: [],
     };
   }
 
- 
 
-
-
-     getLocation = (e) => {
+     getLocation = async(e) => {
       e.preventDefault();
       const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.quer}&format=json`;
-       axios.get(url)
+       await axios.get(url)
       .then((local) => {
         const matches = local.data
         console.log(local, 'string')
@@ -47,16 +44,16 @@ class App extends React.Component {
       })
     }
   
-    getWeath = (e) => {
+    getWeath = async(e) => {
       e.preventDefault();
-      const url = process.env.REACT_APP_LOCAL_SERV;
-      const q = {
+      const url = process.env.REACT_APP_LOCAL_TEST;
+      const q = {params: {
         lat: this.state.loclat,
         lon: this.state.loclon,
-    }
+    }}
 
 
-     axios.get(url, q)
+     await axios.get(url, q)
       .then((forecasts) => {
         const matcher = forecasts.data
         this.setState({ weather: matcher,
@@ -66,6 +63,25 @@ class App extends React.Component {
         <Error error={error.message} />
       })
 
+    }
+
+    getMov = async (e) => {
+      e.preventDefault();
+      const url = process.env.REACT_APP_LOCAL_TEST;
+      const q = { params:{
+        query: this.state.quer
+      }}
+
+      await axios.get(url, q)
+      .then((movies => {
+        const movieRez = movies.data;
+        this.setState({
+          movieResults: movieRez[0]
+        })
+        .catch((error) => {
+          <Error error={error.message} />
+        })
+      }))
     }
   
 
@@ -93,6 +109,16 @@ class App extends React.Component {
               </Card.Body>
             </Card>
             <button onClick={this.getWeath}>Get Some Forecasts</button>
+            <button onClick={this.getMov}>Or maybe some movies?</button>
+            {this.state.movieResults !== [] &&
+              <Card className='movie-base'>
+              <Card.Body>
+              <Card.Text>
+                Title: {this.state.movieResults.title} , 
+                Votes: {this.state.movieResults.title},
+              </Card.Text>
+              </Card.Body>
+            </Card>}
   </>
   )
 }
