@@ -19,26 +19,33 @@ Finish time: _____
 Actual time needed to complete: _____
 
 Change Log
-Name of feature: launch______getting the data hooked up and____________________
+Name of feature: launch______Get app stable__________________
 
 Estimate of time needed to complete: ___30 min
 
-Start time: 1:40_
+Start time: 12:00_
 
-Finish time: _3:40
+Finish time: _12:40
 
-Actual time needed to complete: 2hr min
+Actual time needed to complete: 40min
 
-Name of feature: _______________________________
+Name of feature: __________Refactoring_____________________
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: __2 hours___
 
-Start time: _____
+Start time: __1:30___
 
-Finish time: _____
+Finish time: __4:00___
+
+Actual time needed to complete: ___3.5 hours__
+
+Architecture
+Name of feature: _______Resyncing to location app and Hiroku________________________
+
+Estimate of time needed to complete: __1 hour___
+
+Start time: ___7:00__
+
+Finish time: ___--__
 
 Actual time needed to complete: _____
-
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
-
-Credit and Collaborations
