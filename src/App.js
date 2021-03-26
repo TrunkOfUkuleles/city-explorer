@@ -54,8 +54,7 @@ class App extends React.Component {
         lon: this.state.loclon,
     }
 
-     axios.get(url)
-     .query(q)
+     axios.get(url, q)
       .then((forecasts) => {
         const matcher = forecasts.data
         this.setState({ weather: matcher,
@@ -78,7 +77,9 @@ class App extends React.Component {
             placeholder="Enter your favorite city!" />
           <button type="submit"> Explore! </button>
         </Form>
-        <Card className='location-base'>
+        
+  
+          <Card className='location-base'>
               <Card.Img variant='top' src={this.state.imgsrc} alt="map" rounded />
               <Card.Body>
           
@@ -88,10 +89,9 @@ class App extends React.Component {
               </Card.Text>
               </Card.Body>
             </Card>
-  
-              <button onClick={this.getWeath}>Get Some Forecasts</button>
- 
-  </>)
+            <button onClick={this.getWeath}>Get Some Forecasts</button>
+  </>
+  )
 }
 }
 export default App
