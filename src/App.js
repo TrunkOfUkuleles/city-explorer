@@ -1,14 +1,12 @@
+
 import React from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Card from "react-bootstrap/Card";
-import Image from "react-bootstrap/Image";
-import Forecast from "./forecast.js";
-import Error from "./error.js";
+import Card from 'react-bootstrap/Card'
 
-// import Alert from 'react-bootstrap/Alert'
+import Form from 'react-bootstrap/Form';
+import Error from './error';
+require('dotenv').config();
 
 class App extends React.Component {
   constructor(props) {
@@ -22,118 +20,81 @@ class App extends React.Component {
       showError: false,
       forc: [],
       showForc: false,
-      weather:{}
+      weather:{},
+      loclat:'',
+      loclon: '',
     };
   }
 
-  // getLocal = async (e) => {
-  //   try{
-  //     e.preventDefault();
-  //     const SERVER = 'http://localhost:3001/forecast';
-  //     const weather = await axios.get(`${SERVER}`);
-  //     const newArr = weather.data
-  //     this.setState({
-  //     forc: newArr.reduce((acc, curr) => {
-  //       let result = [...acc, { date: curr.datetime,
-  //                               description: curr.weather.description,
-  //                               temp: curr.temp }]
-  //     return result}, [] )
-  //     })
+ 
 
-  //   }catch(error){
-  //       console.error(error)
-  //   }
-  // }
 
-  componentDidMount = async() => {
-    const SERVER = process.env.REACT_APP_LOCAL_KEY;
-    await axios.get(`${SERVER}`)
-      .then((result) => {
-        this.setState({
-          forc: result.data,
-          showForc: true,
-        });
-        console.log(this.state)
+
+     getLocation = (e) => {
+      e.preventDefault();
+      const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATION_KEY}&q=${this.state.quer}&format=json`;
+       axios.get(url)
+      .then((local) => {
+        const matches = local.data
+        console.log(local, 'string')
+      this.setState({ location: matches[0],  loclat: matches[0].lat , loclon: matches[0].lon, displayResults: true, 
+        imgsrc: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_KEY}&center=${matches[0].lat},${matches[0].lon}`
+      
+      })})
+      .catch((error) => {
+
+        <Error error={error.message} />;
+      })
+    }
+  
+    getWeath = (e) => {
+      e.preventDefault();
+      const url = process.env.REACT_APP_LOCAL_SERV;
+      const q = {
+        lat: this.state.loclat,
+        lon: this.state.loclon,
+    }
+
+
+     axios.get(url, q)
+      .then((forecasts) => {
+        const matcher = forecasts.data
+        this.setState({ weather: matcher,
+                        showForc: true})
       })
       .catch((error) => {
-        
-        <Error error={error.message} />;
-      });
-  };
+        <Error error={error.message} />
+      })
 
-  // specificFore = async() =>{
-  //   const WEATH = process.env.REACT_APP_LOCAL_KEY;
-  //   await axios.get(`${WEATH}`)
-  //     .then((result) => {
-  //       this.setState({
-  //         forc: result.data,
-  //         showForc: true,
-  //       });
-  //       console.log(this.state)
-  //     })
-  //     .catch((error) => {
-     
-  //       <Error error={error.message} />;
-  //     });
-  // }
-
-  getTest = async (e) => {
-    e.preventDefault();
-    try {
-      const url = `https://us1.locationiq.com/v1/search.php?q=${this.state.quer}&format=json&key=${process.env.REACT_APP_LOCATION_KEY}`;
-      const location = await axios.get(url);
-      const locationArray = await location.data;
-
-      this.setState({
-        location: locationArray[0],
-        displayResults: true,
-        imgsrc: `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATION_KEY}&center=${locationArray[0].lat},${locationArray[0].lon}&zoom=13`,
-      });
-    } catch (error) {
-     
-      <Error error={error.message} />;
     }
-  };
+  
 
   render() {
+
     return (
-      <div>
-        <Form>
-          <div onSubmit={this.getTest}>
-            {this.state.location.display_name || "TEMP"}{" "}
-          </div>
-          <input
-            onChange={(e) => this.setState({ quer: e.target.value })}
-            placeholder="Enter your favorite city!"
-          />
-          <Button type="submit"> Explore! </Button>
+      <>
+      <h1> Welcome</h1>
+
+        <Form className='top-box' onSubmit={this.getLocation}>
+          <input onChange={(e) => this.setState({ quer: e.target.value })}
+            placeholder="Enter your favorite city!" />
+          <button type="submit"> Explore! </button>
         </Form>
-
-        <Card>
-             {
-         this.state.showForc ?
-           <ul>
-            <Forecast data={this.state.forc} />
-          </ul> 
-          :
-       <p> forcast? (this.state)</p>}
-       </Card>
-
-        {this.state.displayResults ? (
-          <Card>
-            <Card.Text>
-              {" "}
-              lat: {this.state.location.lat}, lon: {this.state.location.lon}{" "}
-            </Card.Text>
-            <Image src={this.state.imgsrc} alt="map" rounded />
-            <p>Weather: {this.state.weather}</p>
-          </Card>
-        ) : (
-          <></>
-        )}
-      </div>
-    );
-  }
+        
+  
+          <Card className='location-base'>
+              <Card.Img variant='top' src={this.state.imgsrc} alt="map" rounded />
+              <Card.Body>
+          
+              <Card.Text>
+                lat: {this.state.loclat}, 
+                lon: {this.state.loclon},
+              </Card.Text>
+              </Card.Body>
+            </Card>
+            <button onClick={this.getWeath}>Get Some Forecasts</button>
+  </>
+  )
 }
-
-export default App;
+}
+export default App

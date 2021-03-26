@@ -1,13 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Alert from 'react-bootstrap/Alert'
 
 
  class Error extends React.Component {
- 
+
 
   render(){
       return (
-         <h1> error bro : {this.props.error}</h1>
+         <Alert variant="danger"> error bro : {this.props.error}</Alert>
       )
   }
  }
