@@ -42,6 +42,7 @@ class App extends React.Component {
       
       })})
       .catch((error) => {
+
         <Error error={error.message} />;
       })
     }
@@ -54,6 +55,7 @@ class App extends React.Component {
         lon: this.state.loclon,
     }
 
+
      axios.get(url, q)
       .then((forecasts) => {
         const matcher = forecasts.data
@@ -63,6 +65,7 @@ class App extends React.Component {
       .catch((error) => {
         <Error error={error.message} />
       })
+
     }
   
 
