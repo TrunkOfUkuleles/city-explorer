@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form';
 import Error from './error';
+import './App.css'
+import Accordion from 'react-bootstrap/Accordion'
 require('dotenv').config();
 
 class App extends React.Component {
@@ -57,7 +59,6 @@ class App extends React.Component {
       .then((forecasts) => {
         console.log('forecasts: ' , forecasts)
         const matcher = forecasts.data
-        console.log(forecasts)
         this.setState({ weather: matcher,
                         showForc: true})
       })
@@ -91,14 +92,17 @@ class App extends React.Component {
 
     return (
       <>
-      <h1> Welcome</h1>
 
-        <Form className='top-box' onSubmit={this.getLocation}>
-          <input onChange={(e) => this.setState({ quer: e.target.value })}
-            placeholder="Enter your favorite city!" />
-          <button type="submit"> Explore! </button>
-        </Form>
-        
+    <div className="header-box">
+
+      <div className="title"><h1> Welcome</h1></div>
+      <Form className='top-box' onSubmit={this.getLocation}>
+        <input onChange={(e) => this.setState({ quer: e.target.value })}
+          placeholder="Enter your favorite city!" />
+        <button type="submit"> Explore! </button>
+      </Form>
+
+    </div>
   
           <Card className='location-base'>
               <Card.Img variant='top' src={this.state.imgsrc} alt="map" rounded />
