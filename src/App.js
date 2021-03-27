@@ -46,7 +46,7 @@ class App extends React.Component {
   
     getWeath = async(e) => {
       e.preventDefault();
-      const url = `${process.env.REACT_APP_LOCAL_TEST}/weather`;
+      const url = `${process.env.REACT_APP_LOCAL_SERV}/weather`;
       const q = {params: {
         lat: this.state.loclat,
         lon: this.state.loclon,
@@ -69,7 +69,7 @@ class App extends React.Component {
 
     getMov = async (e) => {
       e.preventDefault();
-      const url = `${process.env.REACT_APP_LOCAL_TEST}/movie`;
+      const url = `${process.env.REACT_APP_LOCAL_SERV}/movie`;
       const q = { params:{
         query: this.state.quer
       }}
