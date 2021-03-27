@@ -46,7 +46,7 @@ class App extends React.Component {
   
     getWeath = async(e) => {
       e.preventDefault();
-      const url = process.env.REACT_APP_LOCAL_TEST;
+      const url = `${process.env.REACT_APP_LOCAL_TEST}/weather`;
       const q = {params: {
         lat: this.state.loclat,
         lon: this.state.loclon,
@@ -55,7 +55,9 @@ class App extends React.Component {
 
      await axios.get(url, q)
       .then((forecasts) => {
+        console.log('forecasts: ' , forecasts)
         const matcher = forecasts.data
+        
         this.setState({ weather: matcher,
                         showForc: true})
       })
@@ -67,7 +69,7 @@ class App extends React.Component {
 
     getMov = async (e) => {
       e.preventDefault();
-      const url = process.env.REACT_APP_LOCAL_TEST;
+      const url = `${process.env.REACT_APP_LOCAL_TEST}/movie`;
       const q = { params:{
         query: this.state.quer
       }}
