@@ -57,7 +57,7 @@ class App extends React.Component {
       .then((forecasts) => {
         console.log('forecasts: ' , forecasts)
         const matcher = forecasts.data
-        
+        console.log(forecasts)
         this.setState({ weather: matcher,
                         showForc: true})
       })
