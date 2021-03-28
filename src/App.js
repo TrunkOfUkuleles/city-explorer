@@ -8,7 +8,6 @@ import Error from './error';
 import './App.css';
 import ForecastSection from './forecastSection';
 import MovieSection from './movieSection';
-
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button'
 
@@ -144,4 +143,4 @@ class App extends React.Component {
   </> )
 }
 }
-export default App
+export default App 
