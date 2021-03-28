@@ -8,8 +8,7 @@ import './App.css'
 
 
 class MovieSection extends React.Component {
-
-    conbstructor(props){
+constructor(props){
         super(props);
         this.state={
 
