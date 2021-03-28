@@ -1,10 +1,17 @@
 .App {
   text-align: center;
+  
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+body{
+  background-color: darkolivegreen;
+  display: grid;
+  justify-content: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -40,4 +47,50 @@
 .top-box{
   display: grid;
   justify-self: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1{
+  color:white;
+  size:2rem;
+}
+
+.header-box{
+  display: grid;
+  justify-content: center;
+  width: 70ch;
+}
+
+.title{
+  width: 500px;
+  display: grid;
+  justify-self: center;
+  justify-content: center;
+}
+
+.button-space{
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.target-image{
+  border-radius: 10%;
+  border-width: 10px;
+  border-color: darkorange;
+}
+
+.latlon{
+  width:350px;
+  border-width: 3px;
+  border-color: darkorange;
+  display:flex;
+  justify-content: space-between;
+  background-color: mediumpurple;
+  justify-self: center;
+}
+
+.card-body{
+  display:grid;
 }
