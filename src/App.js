@@ -8,7 +8,7 @@ import Error from './error';
 import './App.css';
 import ForecastSection from './forecastSection';
 import MovieSection from './movieSection';
-import LocationSection from './locationSection'
+
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button'
 
