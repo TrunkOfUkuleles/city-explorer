@@ -5,8 +5,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form';
 import Error from './error';
-import './App.css'
-import Accordion from 'react-bootstrap/Accordion'
+import './App.css';
+import ForecastSection from './forecastSection';
+import MovieSection from './movieSection';
+import LocationSection from './locationSection'
+import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button'
+
 require('dotenv').config();
 
 class App extends React.Component {
@@ -25,6 +30,7 @@ class App extends React.Component {
       loclat:'',
       loclon: '',
       movieResults: [],
+      showMov: false,
     };
   }
 
@@ -79,7 +85,8 @@ class App extends React.Component {
       .then((movies => {
         const movieRez = movies.data;
         this.setState({
-          movieResults: movieRez[0]
+          movieResults: movieRez[0],
+          showMov:true
         })
         .catch((error) => {
           <Error error={error.message} />
@@ -87,46 +94,54 @@ class App extends React.Component {
       }))
     }
   
-
+      
   render() {
 
     return (
       <>
 
-    <div className="header-box">
 
-      <div className="title"><h1> Welcome</h1></div>
-      <Form className='top-box' onSubmit={this.getLocation}>
-        <input onChange={(e) => this.setState({ quer: e.target.value })}
-          placeholder="Enter your favorite city!" />
-        <button type="submit"> Explore! </button>
+
+      <div className="title"><h1> Welcome To The Show</h1></div>
+
+    <Accordion>
+      <Card>
+
+        <Card.Header>
+        <Form className='top-box' onSubmit={this.getLocation}>
+              <input onChange={(e) => this.setState({ quer: e.target.value })}
+          placeholder="Enter your favorite city!" autoComplete='or town!' />
+        <Accordion.Toggle as={Button} variant="submit" eventKey="0" onClick={this.getLocation}>
+        V  V  V
+      </Accordion.Toggle>
       </Form>
+        </Card.Header>
+    
+    <Accordion.Collapse eventKey="0">
+    
+          {/* <LocationSection data={ {img: this.state.imgsrc, lat: this.state.loclat, lon:  this.state.loclon} } /> */}
+          <Card.Body className="card-body">
+              <Card.Img className="target-image" variant='top' src={this.state.imgsrc} alt="map"  />
+              
+              <Card.Text className="latlon">
+                <p>lat: {this.state.loclat}</p> 
+               <p> lon: {this.state.loclon}</p>
+              </Card.Text>
+            <Card.Footer className='button-space'>
+            <button onClick={this.getWeath} >Get Some Forecasts</button>
+            <button onClick={this.getMov} >Or maybe some movies?</button>
+            </Card.Footer>
+              </Card.Body>
+      </Accordion.Collapse>
+      </Card>
+        </Accordion>
 
-    </div>
-  
-          <Card className='location-base'>
-              <Card.Img variant='top' src={this.state.imgsrc} alt="map" rounded />
-              <Card.Body>
-          
-              <Card.Text>
-                lat: {this.state.loclat}, 
-                lon: {this.state.loclon},
-              </Card.Text>
-              </Card.Body>
-            </Card>
-            <button onClick={this.getWeath}>Get Some Forecasts</button>
-            <button onClick={this.getMov}>Or maybe some movies?</button>
-            {this.state.movieResults !== [] &&
-              <Card className='movie-base'>
-              <Card.Body>
-              <Card.Text>
-                Title: {this.state.movieResults.title} , 
-                Votes: {this.state.movieResults.title},
-              </Card.Text>
-              </Card.Body>
-            </Card>}
-  </>
-  )
+     <ForecastSection show={this.state.showForc} data={this.state.weather} />
+
+     <MovieSection show={this.state.showMov} data={this.state.movieResults} />
+
+
+  </> )
 }
 }
 export default App

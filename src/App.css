@@ -52,7 +52,8 @@ body{
 }
 
 h1{
-  color:white
+  color:white;
+  size:2rem;
 }
 
 .header-box{
@@ -63,6 +64,33 @@ h1{
 
 .title{
   width: 500px;
+  display: grid;
   justify-self: center;
+  justify-content: center;
+}
 
+.button-space{
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.target-image{
+  border-radius: 10%;
+  border-width: 10px;
+  border-color: darkorange;
+}
+
+.latlon{
+  width:350px;
+  border-width: 3px;
+  border-color: darkorange;
+  display:flex;
+  justify-content: space-between;
+  background-color: mediumpurple;
+  justify-self: center;
+}
+
+.card-body{
+  display:grid;
 }
