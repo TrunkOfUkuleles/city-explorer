@@ -9,6 +9,12 @@ import './App.css'
 
 class MovieSection extends React.Component {
 
+    conbstructor(props){
+        super(props);
+        this.state={
+
+        }
+    }
     
 render() {
     return (
@@ -18,8 +24,8 @@ render() {
     <Card className='movie-base'>
 
     <Card.Text>
-      Title: {this.props.movieResults.title} || ''
-      Votes: {this.props.movieResults.votes} || ''
+      Title: {this.props.data.title} || ''
+      Votes: {this.props.data.votes} || ''
     </Card.Text>
 
   </Card>

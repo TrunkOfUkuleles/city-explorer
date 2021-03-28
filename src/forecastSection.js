@@ -13,7 +13,7 @@ class ForecastSection extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            forc: this.props.weather
+            forc: this.props.data
         }
     }
 
