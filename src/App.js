@@ -134,10 +134,14 @@ class App extends React.Component {
       </Accordion.Collapse>
       </Card>
         </Accordion>
-
-     <ForecastSection show={this.state.showForc} data={this.state.weather} />
-
-     <MovieSection show={this.state.showMov} data={this.state.movieResults} />
+      {this.state.showForc&&
+      <ForecastSection show={this.state.showForc} data={this.state.weather} />
+      }
+     
+      {this.state.showMov&&
+      <MovieSection show={this.state.showMov} data={this.state.movieResults} />
+      }
+ 
 
 
   </> )

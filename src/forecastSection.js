@@ -19,26 +19,19 @@ class ForecastSection extends React.Component {
 
     renderer = (datas) => {
          datas.map(el=>{
-            return ( <>
+            return ( 
             <Card className="forecast-base">
             <Card.Text >
-              Forecast: {el.forecast} 
+              Forecast: {el.forecast}
               Date: {el.time}
             </Card.Text>
           </Card>
                 
-                </>
+                
             )})}
                
     
-        render(){
-            return (
-                    <>
-                    <renderer data={this.props.data}/>
-                    </>
-            )
-        }
-    
+ 
 
     
 render(){
@@ -46,12 +39,7 @@ render(){
         <>
 {this.props.show &&
 
-<Card className="forecast-base">
-            <Card.Text >
-              Forecast: {this.props.data.forecast} 
-              Date: {this.props.data.time}
-            </Card.Text>
-          </Card>
+<renderer data={this.state.forc}/>
 
 }
 </>
