@@ -17,16 +17,39 @@ class ForecastSection extends React.Component {
         }
     }
 
+    renderer = (datas) => {
+         datas.map(el=>{
+            return ( <>
+            <Card className="forecast-base">
+            <Card.Text >
+              Forecast: {el.forecast} 
+              Date: {el.time}
+            </Card.Text>
+          </Card>
+                
+                </>
+            )})}
+               
     
-render() {
+        render(){
+            return (
+                    <>
+                    <renderer data={this.props.data}/>
+                    </>
+            )
+        }
+    
+
+    
+render(){
     return (
         <>
 {this.props.show &&
 
 <Card className="forecast-base">
-            <Card.Text>
-              Forecast: {this.state.forc.forecast} || ''
-              Date: {this.state.forc.time} || ''
+            <Card.Text >
+              Forecast: {this.props.data.forecast} 
+              Date: {this.props.data.time}
             </Card.Text>
           </Card>
 
@@ -35,7 +58,7 @@ render() {
     )
 } 
 
-
 }
+
 
 export default ForecastSection;
