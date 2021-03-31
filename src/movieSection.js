@@ -14,20 +14,26 @@ constructor(props){
 
         }
     }
+
+    renderer = (data) =>{
+      data.map(el=>{
+        return (
+     <Card className='movie-base'>
+    <Card.Text>
+      Title: {el.title} 
+      Votes: {el.votes} 
+    </Card.Text>
+  </Card>
+        )
+      })
+    }
     
 render() {
     return (
         <>
 {this.props.show && 
 
-    <Card className='movie-base'>
-
-    <Card.Text>
-      Title: {this.props.data.title} || ''
-      Votes: {this.props.data.votes} || ''
-    </Card.Text>
-
-  </Card>
+   <renderer data={this.props.data} />
 }
 </>
 
