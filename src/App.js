@@ -51,7 +51,7 @@ class App extends React.Component {
       })
     }
   
-    getWeath = async(e) => {
+    getWeath = async(e) => { 
       e.preventDefault();
       const url = `${process.env.REACT_APP_LOCAL_SERV}/weather`;
       const q = {params: {
@@ -84,7 +84,7 @@ class App extends React.Component {
       .then((movies => {
         const movieRez = movies.data;
         this.setState({
-          movieResults: movieRez[0],
+          movieResults: movieRez,
           showMov:true
         })
         .catch((error) => {
@@ -134,9 +134,9 @@ class App extends React.Component {
       </Accordion.Collapse>
       </Card>
         </Accordion>
-
+        {this.state.showForc &&
       <ForecastSection show={this.state.showForc} data={this.state.weather} />
-      
+        }
      
       {this.state.showMov&&
       <MovieSection show={this.state.showMov} data={this.state.movieResults} />
